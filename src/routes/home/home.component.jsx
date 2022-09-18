@@ -1,38 +1,38 @@
-import { Outlet } from 'react-router-dom';
-import { Categories } from '../../components/categories/categories.component';
+import { Outlet } from "react-router-dom";
+import { Categories } from "../../components/categories/categories.component";
 
 export const Home = () => {
   const categories = [
     {
       id: 1,
-      title: 'hats',
-      imageUrl: 'https://i.ibb.co/cvpntL1/hats.png',
+      title: "hats",
+      imageId: "cvpntL1",
     },
     {
       id: 2,
-      title: 'jackets',
-      imageUrl: 'https://i.ibb.co/px2tCc3/jackets.png',
+      title: "jackets",
+      imageId: "px2tCc3",
     },
     {
       id: 3,
-      title: 'sneakers',
-      imageUrl: 'https://i.ibb.co/0jqHpnp/sneakers.png',
+      title: "sneakers",
+      imageId: "0jqHpnp",
     },
     {
       id: 4,
-      title: 'womens',
-      imageUrl: 'https://i.ibb.co/GCCdy8t/womens.png',
+      title: "womens",
+      imageId: "GCCdy8t",
     },
     {
       id: 5,
-      title: 'mens',
-      imageUrl: 'https://i.ibb.co/R70vBrQ/men.png',
+      title: "mens",
+      imageId: "R70vBrQ",
     },
   ];
-    return (
-        <div>
-            <Outlet />
-            <Categories categories={categories}/>
-        </div>
-    );
-}
+  return (
+    <div>
+      <Outlet />
+      <Categories categories={categories} />
+    </div>
+  );
+};
