@@ -54,9 +54,9 @@ export const SignInForm = () => {
           onChange={handleChange}
           value={email}
         />
-        {logError === "auth/user-not-found" ? (
+        {logError === "auth/user-not-found" && (
           <span className="error">No user associated with this email</span>
-        ) : null}
+        )}
         <FormInput
           label="Password"
           required
@@ -65,9 +65,9 @@ export const SignInForm = () => {
           onChange={handleChange}
           value={password}
         />
-        {logError === "auth/wrong-password" ? (
+        {logError === "auth/wrong-password" && (
           <span className="error">Incorrect password</span>
-        ) : null}
+        )}
         <div className="sign-in__buttons">
           <Button type="submit">Sign In</Button>
           <Button type="button" buttonType="google" onClick={signInWithGoogle}>

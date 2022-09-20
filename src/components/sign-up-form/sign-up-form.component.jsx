@@ -4,9 +4,9 @@ import {
   createUserDocFromAuth,
 } from "../../utils/firebase/firebase.utils";
 
-import { Button } from '../button/button.component';
+import { Button } from "../button/button.component";
 import { FormInput } from "../form-input/form-input.component";
-import './sign-up-form.styles.scss';
+import "./sign-up-form.styles.scss";
 
 const defaultFormFields = {
   displayName: "",
@@ -16,7 +16,14 @@ const defaultFormFields = {
 };
 
 export const SignUpForm = () => {
-  const [regError, setRegError] = useState('');
+  const [regError, setRegError] = useState("");
+  const errMessage = {
+    short: "Password should be 6 characters or longer",
+    noMatch: "Passwords do not match",
+    exist: "Cannot create user. Email already in use",
+    else: "Something went wrong. Try again later.",
+  };
+
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
@@ -25,10 +32,10 @@ export const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (password.length < 6) {
-      setRegError('short-pass');
+      setRegError(errMessage.short);
       return;
     } else if (password !== confirmPassword) {
-      setRegError('pass-do-not-match');
+      setRegError(errMessage.noMatch);
       return;
     }
     try {
@@ -39,7 +46,11 @@ export const SignUpForm = () => {
       await createUserDocFromAuth(user, { displayName });
       resetFormFields();
     } catch (error) {
-      setRegError(error.code);
+      setRegError(
+        error.code === "auth/email-already-in-use"
+          ? errMessage.exist
+          : errMessage.else
+      );
     }
   };
 
@@ -86,9 +97,7 @@ export const SignUpForm = () => {
           onChange={handleChange}
           value={confirmPassword}
         />
-        {regError === 'pass-do-not-match' ? <span className="error">Passwords do not match</span> : null}
-        {regError === 'short-pass' ? <span className="error">Password should be 6 characters or longer</span> : null}
-        {regError === 'auth/email-already-in-use' ? <span className="error">Cannot create user. Email already in use</span> : null}
+        {regError !== null && <span className="error">{regError}</span>}
         <Button type="submit">Sign Up</Button>
       </form>
     </div>
