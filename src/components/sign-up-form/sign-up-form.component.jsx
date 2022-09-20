@@ -27,6 +27,10 @@ export const SignUpForm = () => {
       alert("Passwords do not match");
       return;
     }
+    if (password.length < 6) {
+      alert("Too short password");
+      return;
+    }
     try {
       const { user } = await createAuthUserWithEmailAndPassword(
         email,

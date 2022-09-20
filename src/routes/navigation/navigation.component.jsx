@@ -21,7 +21,10 @@ export const Navigation = () => {
             SHOP
           </Link>
           {currentUser 
-            ? (<span className="nav__link" onClick={signOutUser}>SIGN OUT</span>)
+            ? (<>
+                <span className="nav__link" onClick={signOutUser}>SIGN OUT</span>
+                <span className="nav__link">{currentUser.displayName}</span>
+              </>)
             : (<Link className="nav__link" to="/auth">
                 SIGN IN
               </Link>)
