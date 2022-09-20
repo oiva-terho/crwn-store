@@ -4,9 +4,9 @@ import {
   createUserDocFromAuth,
 } from "../../utils/firebase/firebase.utils";
 
-import { Button } from '../button/button.component';
+import { Button } from "../button/button.component";
 import { FormInput } from "../form-input/form-input.component";
-import './sign-up-form.styles.scss';
+import "./sign-up-form.styles.scss";
 
 const defaultFormFields = {
   displayName: "",
@@ -16,6 +16,14 @@ const defaultFormFields = {
 };
 
 export const SignUpForm = () => {
+  const [regError, setRegError] = useState("");
+  const errMessage = {
+    short: "Password should be 6 characters or longer",
+    noMatch: "Passwords do not match",
+    exist: "Cannot create user. Email already in use",
+    else: "Something went wrong. Try again later.",
+  };
+
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
@@ -23,12 +31,11 @@ export const SignUpForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
     if (password.length < 6) {
-      alert("Too short password");
+      setRegError(errMessage.short);
+      return;
+    } else if (password !== confirmPassword) {
+      setRegError(errMessage.noMatch);
       return;
     }
     try {
@@ -39,16 +46,18 @@ export const SignUpForm = () => {
       await createUserDocFromAuth(user, { displayName });
       resetFormFields();
     } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        alert("cannot create user, email already in use");
-      }
-      console.log("user creation encountered an error", error);
+      setRegError(
+        error.code === "auth/email-already-in-use"
+          ? errMessage.exist
+          : errMessage.else
+      );
     }
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
+    setRegError(null);
   };
 
   return (
@@ -88,6 +97,7 @@ export const SignUpForm = () => {
           onChange={handleChange}
           value={confirmPassword}
         />
+        {regError !== null && <span className="error">{regError}</span>}
         <Button type="submit">Sign Up</Button>
       </form>
     </div>
