@@ -16,6 +16,7 @@ const defaultFormFields = {
 };
 
 export const SignUpForm = () => {
+  const [regError, setRegError] = useState('');
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
@@ -23,12 +24,11 @@ export const SignUpForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
     if (password.length < 6) {
-      alert("Too short password");
+      setRegError('short-pass');
+      return;
+    } else if (password !== confirmPassword) {
+      setRegError('pass-do-not-match');
       return;
     }
     try {
@@ -39,16 +39,14 @@ export const SignUpForm = () => {
       await createUserDocFromAuth(user, { displayName });
       resetFormFields();
     } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        alert("cannot create user, email already in use");
-      }
-      console.log("user creation encountered an error", error);
+      setRegError(error.code);
     }
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
+    setRegError(null);
   };
 
   return (
@@ -88,6 +86,9 @@ export const SignUpForm = () => {
           onChange={handleChange}
           value={confirmPassword}
         />
+        {regError === 'pass-do-not-match' ? <span className="error">Passwords do not match</span> : null}
+        {regError === 'short-pass' ? <span className="error">Password should be 6 characters or longer</span> : null}
+        {regError === 'auth/email-already-in-use' ? <span className="error">Cannot create user. Email already in use</span> : null}
         <Button type="submit">Sign Up</Button>
       </form>
     </div>
