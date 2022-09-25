@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 
-import {
-  ButtonBase,
-  ButtonGoogleSignIn,
-  ButtonInverted,
-} from '../button/button.styles';
+import { ButtonBase } from '../button/button.styles';
 
 export const Container = styled.div`
   position: absolute;
@@ -18,9 +14,7 @@ export const Container = styled.div`
   top: 90px;
   right: 40px;
   z-index: 5;
-  ${ButtonBase},
-  ${ButtonGoogleSignIn},
-  ${ButtonInverted} {
+  ${ButtonBase}{
     margin-top: auto;
   }
 `;

@@ -13,9 +13,6 @@ export const Container = styled.div`
   &:hover {
     cursor: pointer;
   }
-  &.large {
-    height: 380px;
-  }
   &:first-child {
     margin-right: 7.5px;
   }
