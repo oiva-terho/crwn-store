@@ -1,6 +1,4 @@
 .shop {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 10px;
-  row-gap: 50px;
+  display: flex;
+  flex-direction: column;
 }
