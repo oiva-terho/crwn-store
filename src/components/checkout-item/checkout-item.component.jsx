@@ -1,12 +1,14 @@
 import { useContext } from 'react';
 
 import { CartContext } from '../../contexts/cart.context';
+import { useScrollBlock } from '../../utils/useScrollBlock.utils';
 
 import './checkout-item.styles.scss';
 
 export const CheckoutItem = ({cartItem}) => {
   const { name, imageUrl, price, quantity }= cartItem;
   const { addItemToCart, removeItemFromCart } = useContext(CartContext);
+  const [blockScroll, allowScroll] = useScrollBlock();
 
   const increaseItemHandler = () => addItemToCart(cartItem);
   const decreaseItemHandler = () => removeItemFromCart(cartItem);
@@ -23,7 +25,12 @@ export const CheckoutItem = ({cartItem}) => {
         <img src={imageUrl} alt={`${name}`} />
       </div>
       <span className='checkout-item__name'></span>
-      <div className='checkout-item__quantity' onWheel={mosueChangeItemHandler}>
+      <div 
+        className='checkout-item__quantity' 
+        onMouseOver={() => blockScroll()} 
+        onMouseOut={() => allowScroll()} 
+        onWheel={mosueChangeItemHandler}
+      >
         <div className='checkout-item__quantity-arrow' onClick={decreaseItemHandler}>&#10094;</div>
         <span className='checkout-item__quantity-value'>{quantity}</span>
         <div className='checkout-item__quantity-arrow' onClick={increaseItemHandler}>&#10095;</div>
