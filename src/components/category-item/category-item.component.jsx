@@ -9,11 +9,7 @@ export const CategoryItem = ({ category }) => {
 
   return (
     <Container key={id} onClick={navigateHandler}>
-      <BgImg
-        style={{
-          backgroundImage: `url(https://i.ibb.co/${imageId}/${title}.png)`,
-        }}
-      />
+      <BgImg imageId={imageId}/>
       <Body>
         <h2>{title}</h2>
         <p>Shop now</p>
