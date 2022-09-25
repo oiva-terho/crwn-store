@@ -1,19 +1,18 @@
-import "./category-item.styles.scss";
+import { Container, BgImg, Body } from "./category-item.styles";
 
 export const CategoryItem = ({ category }) => {
   const { imageId, id, title } = category;
   return (
-    <div className="category-item" key={id}>
-      <div
-        className="category-item__bg-img"
+    <Container key={id}>
+      <BgImg
         style={{
           backgroundImage: `url(https://i.ibb.co/${imageId}/${title}.png)`,
         }}
       />
-      <div className="category-item__body">
+      <Body>
         <h2>{title}</h2>
         <p>Shop now</p>
-      </div>
-    </div>
+      </Body>
+    </Container>
   );
 };
