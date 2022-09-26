@@ -3,7 +3,15 @@ import { useContext } from 'react';
 import { CartContext } from '../../contexts/cart.context';
 import { useScrollBlock } from '../../utils/useScrollBlock.utils';
 
-import './checkout-item.styles.scss';
+import {
+  Container,
+  ImgContainer,
+  BaseSpan,
+  Quantity,
+  Arrow,
+  Value,
+  RemoveButton,
+} from './checkout-item.styles';
 
 export const CheckoutItem = ({cartItem}) => {
   const { name, imageUrl, price, quantity }= cartItem;
@@ -20,23 +28,22 @@ export const CheckoutItem = ({cartItem}) => {
   };
 
   return (
-    <div className="checkout-item">
-      <div className="checkout-item__image-container">
+    <Container>
+      <ImgContainer>
         <img src={imageUrl} alt={`${name}`} />
-      </div>
-      <span className='checkout-item__name'></span>
-      <div 
-        className='checkout-item__quantity' 
+      </ImgContainer>
+      <BaseSpan> {name} </BaseSpan>
+      <Quantity
         onMouseOver={() => blockScroll()} 
         onMouseOut={() => allowScroll()} 
         onWheel={mosueChangeItemHandler}
       >
-        <div className='checkout-item__quantity-arrow' onClick={decreaseItemHandler}>&#10094;</div>
-        <span className='checkout-item__quantity-value'>{quantity}</span>
-        <div className='checkout-item__quantity-arrow' onClick={increaseItemHandler}>&#10095;</div>
-      </div>
-      <span className='checkout-item__price'>{price * quantity}</span>
-      <div className='checkout-item__remove-btn'onClick={removeItemHandler}>&#10005;</div>
-    </div>
+        <Arrow onClick={decreaseItemHandler}>&#10094;</Arrow>
+        <Value>{quantity}</Value>
+        <Arrow onClick={increaseItemHandler}>&#10095;</Arrow>
+      </Quantity>
+      <BaseSpan>{price * quantity}</BaseSpan>
+      <RemoveButton onClick={removeItemHandler}>&#10005;</RemoveButton>
+    </Container>
   )
 };
