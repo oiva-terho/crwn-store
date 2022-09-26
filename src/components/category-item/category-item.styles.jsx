@@ -8,16 +8,16 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   border: 1px solid black;
-  margin: 0 7.5px 15px;
+  margin: 0 7px 15px;
   overflow: hidden;
   &:hover {
     cursor: pointer;
   }
   &:first-child {
-    margin-right: 7.5px;
+    margin-right: 7px;
   }
   &:last-child {
-    margin-left: 7.5px;
+    margin-left: 7px;
 `;
 
 export const BgImg = styled.div`
