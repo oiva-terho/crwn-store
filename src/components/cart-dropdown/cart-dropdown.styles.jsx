@@ -14,7 +14,7 @@ export const Container = styled.div`
   top: 90px;
   right: 40px;
   z-index: 5;
-  ${ButtonBase}{
+  ${ButtonBase} {
     margin-top: auto;
   }
 `;
@@ -28,7 +28,7 @@ export const CartItems = styled.div`
   height: 240px;
   display: flex;
   flex-direction: column;
-  overflow-Y: scroll;
+  overflow-y: scroll;
   scrollbar-color: #f9f9fd;
   scrollbar-width: thin;
   &::-webkit-scrollbar {

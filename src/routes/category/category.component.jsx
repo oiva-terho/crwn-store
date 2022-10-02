@@ -15,15 +15,15 @@ export const Category = () => {
     setProducts(categoriesMap[category]);
   }, [category, categoriesMap]);
 
-  return(
+  return (
     <>
       <Title>{category.toUpperCase()}</Title>
       <Container>
-        {products && products.map(product => 
-          <ProductCard key={product.id} product={product} />
-        )}
+        {products &&
+          products.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
       </Container>
     </>
-
-  )
+  );
 };
