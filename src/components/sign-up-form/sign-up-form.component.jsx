@@ -1,27 +1,27 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   createAuthUserWithEmailAndPassword,
-  createUserDocFromAuth,
-} from "../../utils/firebase/firebase.utils";
+  createUserDocFromAuth
+} from '../../utils/firebase/firebase.utils';
 
-import { Button } from "../button/button.component";
-import { FormInput } from "../form-input/form-input.component";
+import { Button } from '../button/button.component';
+import { FormInput } from '../form-input/form-input.component';
 import { SignInContainer, ErrorMessage } from '../sign-in/sign-in.styles';
 
 const defaultFormFields = {
-  displayName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
+  displayName: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
 };
 
 export const SignUpForm = () => {
-  const [regError, setRegError] = useState("");
+  const [regError, setRegError] = useState('');
   const errMessage = {
-    short: "Password should be 6 characters or longer",
-    noMatch: "Passwords do not match",
-    exist: "Cannot create user. Email already in use",
-    else: "Something went wrong. Try again later.",
+    short: 'Password should be 6 characters or longer',
+    noMatch: 'Passwords do not match',
+    exist: 'Cannot create user. Email already in use',
+    else: 'Something went wrong. Try again later.'
   };
 
   const [formFields, setFormFields] = useState(defaultFormFields);
@@ -29,7 +29,7 @@ export const SignUpForm = () => {
 
   const resetFormFields = () => setFormFields(defaultFormFields);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault();
     if (password.length < 6) {
       setRegError(errMessage.short);
@@ -47,14 +47,14 @@ export const SignUpForm = () => {
       resetFormFields();
     } catch (error) {
       setRegError(
-        error.code === "auth/email-already-in-use"
+        error.code === 'auth/email-already-in-use'
           ? errMessage.exist
           : errMessage.else
       );
     }
   };
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
     setRegError(null);
@@ -66,39 +66,39 @@ export const SignUpForm = () => {
       <span>Sign up with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput
-          label="Display Name"
+          label='Display Name'
           required
-          name="displayName"
-          type="text"
+          name='displayName'
+          type='text'
           onChange={handleChange}
           value={displayName}
         />
         <FormInput
-          label="Email"
+          label='Email'
           required
-          name="email"
-          type="email"
+          name='email'
+          type='email'
           onChange={handleChange}
           value={email}
         />
         <FormInput
-          label="Password"
+          label='Password'
           required
-          name="password"
-          type="password"
+          name='password'
+          type='password'
           onChange={handleChange}
           value={password}
         />
         <FormInput
-          label="Confirm password"
+          label='Confirm password'
           required
-          name="confirmPassword"
-          type="password"
+          name='confirmPassword'
+          type='password'
           onChange={handleChange}
           value={confirmPassword}
         />
         {regError !== null && <ErrorMessage>{regError}</ErrorMessage>}
-        <Button type="submit">Sign Up</Button>
+        <Button type='submit'>Sign Up</Button>
       </form>
     </SignInContainer>
   );

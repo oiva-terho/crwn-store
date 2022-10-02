@@ -1,20 +1,22 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer } from 'react';
 
-import { createAction } from "../utils/reducer/reducer.utils";
-import { onAuthStateChangedListener, createUserDocFromAuth } from "../utils/firebase/firebase.utils";
+import { createAction } from '../utils/reducer/reducer.utils';
+import {
+  onAuthStateChangedListener,
+  createUserDocFromAuth
+} from '../utils/firebase/firebase.utils';
 
 export const UserContext = createContext({
   currentUser: null,
   setCurrentUser: () => null
 });
 
-
 export const USER_ACTION_TYPES = {
   SET_CURRENT_USER: 'SER_CURRENT_USER'
 };
 
 const INITIAL_STATE = {
-  currentUser: null,
+  currentUser: null
 };
 
 const userReducer = (state, action) => {
@@ -31,13 +33,11 @@ const userReducer = (state, action) => {
 export const UserProvider = ({ children }) => {
   const [{ currentUser }, dispatch] = useReducer(userReducer, INITIAL_STATE);
 
-  const setCurrentUser = (user) =>
-    dispatch(
-      createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user)
-    );
+  const setCurrentUser = user =>
+    dispatch(createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user));
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user) => {
+    const unsubscribe = onAuthStateChangedListener(user => {
       if (user) {
         createUserDocFromAuth(user);
       }
@@ -48,7 +48,7 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const value = {
-    currentUser,
+    currentUser
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

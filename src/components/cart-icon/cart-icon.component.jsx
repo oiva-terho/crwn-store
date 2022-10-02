@@ -10,8 +10,8 @@ export const CartIcon = () => {
 
   return (
     <Container onClick={toggleIsCartOpen}>
-      <Icon/>
+      <Icon />
       <ItemCount>{cartCount}</ItemCount>
     </Container>
-  )
+  );
 };

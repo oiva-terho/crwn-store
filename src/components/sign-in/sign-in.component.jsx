@@ -1,21 +1,25 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   signInWithGooglePopup,
-  signInUserWithEmailAndPassword,
-} from "../../utils/firebase/firebase.utils";
+  signInUserWithEmailAndPassword
+} from '../../utils/firebase/firebase.utils';
 
-import { Button, BUTTON_TYPE_CLASSES } from "../button/button.component";
-import { FormInput } from "../form-input/form-input.component";
+import { Button, BUTTON_TYPE_CLASSES } from '../button/button.component';
+import { FormInput } from '../form-input/form-input.component';
 
-import { SignInContainer, ButtonsContainer, ErrorMessage } from './sign-in.styles';
+import {
+  SignInContainer,
+  ButtonsContainer,
+  ErrorMessage
+} from './sign-in.styles';
 
 const defaultFormFields = {
-  email: "",
-  password: "",
+  email: '',
+  password: ''
 };
 
 export const SignInForm = () => {
-  const [logError, setLogError] = useState("");
+  const [logError, setLogError] = useState('');
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
@@ -25,7 +29,7 @@ export const SignInForm = () => {
     await signInWithGooglePopup();
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault();
     try {
       await signInUserWithEmailAndPassword(email, password);
@@ -35,7 +39,7 @@ export const SignInForm = () => {
     }
   };
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
     setLogError(null);
@@ -47,30 +51,33 @@ export const SignInForm = () => {
       <span>Sign in with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput
-          label="Email"
+          label='Email'
           required
-          name="email"
-          type="email"
+          name='email'
+          type='email'
           onChange={handleChange}
           value={email}
         />
-        {logError === "auth/user-not-found" && (
+        {logError === 'auth/user-not-found' && (
           <ErrorMessage>No user associated with this email</ErrorMessage>
         )}
         <FormInput
-          label="Password"
+          label='Password'
           required
-          name="password"
-          type="password"
+          name='password'
+          type='password'
           onChange={handleChange}
           value={password}
         />
-        {logError === "auth/wrong-password" && (
+        {logError === 'auth/wrong-password' && (
           <ErrorMessage>Incorrect password</ErrorMessage>
         )}
         <ButtonsContainer>
-          <Button type="submit">Sign In</Button>
-          <Button type="button" buttonType={BUTTON_TYPE_CLASSES.google} onClick={signInWithGoogle}>
+          <Button type='submit'>Sign In</Button>
+          <Button
+            type='button'
+            buttonType={BUTTON_TYPE_CLASSES.google}
+            onClick={signInWithGoogle}>
             Google Sign In
           </Button>
         </ButtonsContainer>

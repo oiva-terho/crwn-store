@@ -25,7 +25,8 @@ export const BgImg = styled.div`
   height: 100%;
   background-size: cover;
   background-position: center;
-  background-image: ${({ imageId }) => `url(https://i.ibb.co/${imageId}/img.png)`};
+  background-image: ${({ imageId }) =>
+    `url(https://i.ibb.co/${imageId}/img.png)`};
   &:hover {
     transform: scale(1.1);
     transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
