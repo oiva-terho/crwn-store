@@ -16,6 +16,7 @@ import { Checkout } from './routes/ceckout/checkout.component';
 
 const App = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener(user => {
       if (user) {
@@ -29,6 +30,7 @@ const App = () => {
   // ESLint gives mistake, because it see dispatch function inside.
   // 'dispatch' may be put inside to hide error. But it may cause missunderstanding.
   // It seems it will rerun every time dispatch fires, but redux logic is that it woul fire once.
+
   return (
     <Routes>
       <Route path='/' element={<Navigation />}>
