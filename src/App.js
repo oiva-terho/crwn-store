@@ -2,11 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 
-import { setCurrentUser } from './store/user/user.action';
-import {
-  onAuthStateChangedListener,
-  createUserDocFromAuth
-} from './utils/firebase/firebase.utils';
+import { checkUserSession } from './store/user/user.action';
 
 import { Home } from './routes/home/home.component';
 import { Navigation } from './routes/navigation/navigation.component';
@@ -18,14 +14,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener(user => {
-      if (user) {
-        createUserDocFromAuth(user);
-      }
-      dispatch(setCurrentUser(user));
-    });
-
-    return unsubscribe;
+    dispatch(checkUserSession());
   }, []);
   // ESLint gives mistake, because it see dispatch function inside.
   // 'dispatch' may be put inside to hide error. But it may cause missunderstanding.

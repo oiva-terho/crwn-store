@@ -71,16 +71,17 @@ export const createUserDocFromAuth = async (userAuth, additionalInfo = {}) => {
 
   const userDocRef = doc(db, 'users', userAuth.uid);
   const userSnapshot = await getDoc(userDocRef);
-  if (userSnapshot.exists()) return userDocRef;
+
+  if (userSnapshot.exists()) return userSnapshot;
 
   const { displayName, email } = userAuth;
-  const createAt = new Date();
+  const createdAt = new Date();
 
   try {
     await setDoc(userDocRef, {
       displayName,
       email,
-      createAt,
+      createdAt,
       ...additionalInfo
     });
   } catch (error) {
@@ -104,4 +105,17 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = callback => {
   if (callback) onAuthStateChanged(auth, callback);
+};
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      userAuth => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
 };
