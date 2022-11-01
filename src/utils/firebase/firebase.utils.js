@@ -74,7 +74,7 @@ export const createUserDocFromAuth = async (userAuth, additionalInfo = {}) => {
 
   if (userSnapshot.exists()) return userSnapshot;
 
-  const { displayName, email } = userAuth;
+  const { email, displayName } = userAuth;
   const createdAt = new Date();
 
   try {
@@ -87,18 +87,19 @@ export const createUserDocFromAuth = async (userAuth, additionalInfo = {}) => {
   } catch (error) {
     console.log('error creating the user', error.message);
   }
+  return userSnapshot;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
 
-  return createUserWithEmailAndPassword(auth, email, password);
+  return await createUserWithEmailAndPassword(auth, email, password);
 };
 
 export const signInUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
 
-  return signInWithEmailAndPassword(auth, email, password);
+  return await signInWithEmailAndPassword(auth, email, password);
 };
 
 export const signOutUser = async () => await signOut(auth);
