@@ -70,17 +70,13 @@ export function* signUp({ payload: { email, password, displayName } }) {
       email,
       password
     );
-    console.log('sugnUp', user, displayName);
     yield put(signUpSuccess(user, { displayName }));
-    console.log('signUp after put signUpSuccess', user, displayName);
   } catch (error) {
     yield put(signUpFailed(error));
   }
-  console.log('signUp done');
 }
 
 export function* signInAfterSignUp({ payload: { user, additionalDetails } }) {
-  console.log('signInAfterSignUp', user, additionalDetails);
   yield call(getSnapshotFromUserAuth, user, additionalDetails);
 }
 

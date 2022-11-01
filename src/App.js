@@ -15,7 +15,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(checkUserSession());
-  }, []);
+  }, [dispatch]);
   // ESLint gives mistake, because it see dispatch function inside.
   // 'dispatch' may be put inside to hide error. But it may cause missunderstanding.
   // It seems it will rerun every time dispatch fires, but redux logic is that it woul fire once.
