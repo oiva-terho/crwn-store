@@ -1,6 +1,10 @@
-import { useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { CartContext } from '../../contexts/cart.context';
+import { selectCartItems } from '../../store/cart/cart.selector';
+import {
+  addItemToCart,
+  removeItemFromCart
+} from '../../store/cart/cart.action';
 import { useScrollBlock } from '../../utils/useScrollBlock.utils';
 
 import {
@@ -15,15 +19,20 @@ import {
 
 export const CheckoutItem = ({ cartItem }) => {
   const { name, imageUrl, price, quantity } = cartItem;
-  const { addItemToCart, removeItemFromCart } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
+
   const [blockScroll, allowScroll] = useScrollBlock();
 
-  const increaseItemHandler = () => addItemToCart(cartItem);
-  const decreaseItemHandler = () => removeItemFromCart(cartItem);
-  const removeItemHandler = () => removeItemFromCart(cartItem, true);
+  const increaseItemHandler = () =>
+    dispatch(addItemToCart(cartItems, cartItem));
+  const decreaseItemHandler = () =>
+    dispatch(removeItemFromCart(cartItems, cartItem));
+  const removeItemHandler = () =>
+    dispatch(removeItemFromCart(cartItems, cartItem, true));
   const mosueChangeItemHandler = e => {
     const change = e.deltaY / 100;
-    change > 0 ? addItemToCart(cartItem) : removeItemFromCart(cartItem);
+    change > 0 ? increaseItemHandler() : decreaseItemHandler();
   };
 
   return (
