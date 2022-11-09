@@ -6,7 +6,7 @@ import {
   removeItemFromCart
 } from '../../store/cart/cart.action';
 import { useScrollBlock } from '../../utils/useScrollBlock.utils';
-
+import { CartItem } from '../../store/cart/cart.types';
 import {
   Container,
   ImgContainer,
@@ -16,8 +16,13 @@ import {
   Value,
   RemoveButton
 } from './checkout-item.styles';
+import { FC } from 'react';
 
-export const CheckoutItem = ({ cartItem }) => {
+type CheckoutItemProps = {
+  cartItem: CartItem
+}
+
+export const CheckoutItem: FC<CheckoutItemProps> = ({ cartItem }) => {
   const { name, imageUrl, price, quantity } = cartItem;
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
@@ -30,10 +35,12 @@ export const CheckoutItem = ({ cartItem }) => {
     dispatch(removeItemFromCart(cartItems, cartItem));
   const removeItemHandler = () =>
     dispatch(removeItemFromCart(cartItems, cartItem, true));
-  const mosueChangeItemHandler = e => {
-    const change = e.deltaY / 100;
+  const mosueChangeItemHandler = (event: WheelEvent) => {
+    const change = event.deltaY / 100;
     change > 0 ? increaseItemHandler() : decreaseItemHandler();
   };
+
+//what is the problem with onWheel property?
 
   return (
     <Container>

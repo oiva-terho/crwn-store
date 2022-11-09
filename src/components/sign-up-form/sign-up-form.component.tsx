@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button } from '../button/button.component';
 import { FormInput } from '../form-input/form-input.component';
 import { SignInContainer, ErrorMessage } from '../sign-in/sign-in.styles';
 import { signUpStart } from '../../store/user/user.action';
+import { AuthError, AuthErrorCodes } from 'firebase/auth';
 
 const defaultFormFields = {
   displayName: '',
@@ -28,7 +29,7 @@ export const SignUpForm = () => {
 
   const resetFormFields = () => setFormFields(defaultFormFields);
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (password.length < 6) {
       setRegError(errMessage.short);
@@ -42,17 +43,17 @@ export const SignUpForm = () => {
       resetFormFields();
     } catch (error) {
       setRegError(
-        error.code === 'auth/email-already-in-use'
+        (error as AuthError).code === AuthErrorCodes.EMAIL_EXISTS
           ? errMessage.exist
           : errMessage.else
       );
     }
   };
 
-  const handleChange = event => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
-    setRegError(null);
+    setRegError('');
   };
 
   return (

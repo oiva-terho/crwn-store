@@ -18,9 +18,14 @@ export const Container = styled.div`
   }
   &:last-child {
     margin-left: 7px;
+  }
 `;
 
-export const BgImg = styled.div`
+type BgImgProps = {
+  imageId: string;
+};
+
+export const BgImg = styled.div<BgImgProps>`
   width: 100%;
   height: 100%;
   background-size: cover;

@@ -1,8 +1,13 @@
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { CategoryItemData } from '../categories/categories.component';
 import { Container, BgImg, Body } from './category-item.styles';
 
-export const CategoryItem = ({ category }) => {
+type CategoryItemProps = {
+  category: CategoryItemData;
+};
+
+export const CategoryItem: FC<CategoryItemProps> = ({ category }) => {
   const { imageId, id, title } = category;
   const navigate = useNavigate();
   const navigateHandler = () => navigate(`/shop/${title}`);

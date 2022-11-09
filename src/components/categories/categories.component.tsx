@@ -1,7 +1,14 @@
 import { Container } from './categories.styles';
 import { CategoryItem } from '../category-item/category-item.component';
+import { Key } from 'react';
 
-const categories = [
+export type CategoryItemData = {
+  id: Key;
+  title: string;
+  imageId: string;
+};
+
+const categories: CategoryItemData[] = [
   {
     id: 1,
     title: 'hats',
