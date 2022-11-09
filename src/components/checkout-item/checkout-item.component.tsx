@@ -35,12 +35,10 @@ export const CheckoutItem: FC<CheckoutItemProps> = ({ cartItem }) => {
     dispatch(removeItemFromCart(cartItems, cartItem));
   const removeItemHandler = () =>
     dispatch(removeItemFromCart(cartItems, cartItem, true));
-  const mosueChangeItemHandler = (event: WheelEvent) => {
+  const mouseChangeItemHandler = (event: React.WheelEvent) => {
     const change = event.deltaY / 100;
     change > 0 ? increaseItemHandler() : decreaseItemHandler();
   };
-
-//what is the problem with onWheel property?
 
   return (
     <Container>
@@ -51,7 +49,7 @@ export const CheckoutItem: FC<CheckoutItemProps> = ({ cartItem }) => {
       <Quantity
         onMouseOver={() => blockScroll()}
         onMouseOut={() => allowScroll()}
-        onWheel={mosueChangeItemHandler}>
+        onWheel={mouseChangeItemHandler}>
         <Arrow onClick={decreaseItemHandler}>&#10094;</Arrow>
         <Value>{quantity}</Value>
         <Arrow onClick={increaseItemHandler}>&#10095;</Arrow>
